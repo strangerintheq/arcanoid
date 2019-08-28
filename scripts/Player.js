@@ -5,19 +5,23 @@ class Player extends Box {
         Object.assign(this, {
             sticky: 0, flying: 0, drunk: 0, shooting: 0
         });
-        this.bonusList = ['sticky', 'shooting', '', 'flying', 'drunk'];
+        this.buffList = ['sticky', 'shooting', '', 'flying', 'drunk'];
     }
 
     playerLogic(dir, s) {
         this.x = Math.max(-s, Math.min(this.x + dir, s - this.width));
         this.update();
-        this.bonusList.forEach((bonus, i) => {
+        this.buffList.forEach((bonus, i) => {
             this[bonus] = Math.max(0, this[bonus] - 0.02);
-            this[bonus] && this.renderBonus(5 + i, this[bonus])
+            this[bonus] && this.renderBuff(5 + i, this[bonus])
         });
     }
 
-    renderBonus(type, value){
+    buff(type) {
+        this[this.buffList[type]] += 30;
+    }
+
+    renderBuff(type, value){
         value = Math.min(30, value);
         let sel = '#mask_' + type + ' path';
         let mask = document.querySelector(sel);

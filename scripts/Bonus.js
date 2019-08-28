@@ -18,17 +18,10 @@ class Bonus extends Ball {
             arcanoid.balls.forEach(b => b.resizeBall(b.r+1));
         if (this.type === 4)  // 🍒
             arcanoid.balls.forEach(b => b.resizeBall(b.r-1));
-        if (this.type === 5)  // 🍓
-            player.sticky += 30;
-        if (this.type === 6)  // 🥕
-            player.shooting += 30;
-        //if (this.type === 7)  // 🍉
-            //arcanoid.
-        if (this.type === 8)  // 🍬
-            player.flying += 30;
-        if (this.type === 9)  // 🍺
-            player.drunk += 30;
+        this.type > 4 && player.buff(this.type-5);
+
     }
+
 
     bonusLogic(player, size){
         this.move();
