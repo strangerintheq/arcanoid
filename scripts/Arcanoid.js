@@ -7,8 +7,7 @@ class Arcanoid {
 
     gameLogic() {
         let p = this.player, s = 100;
-        p.x = Math.max(-s, Math.min(p.x + this.moveDirection, s - p.width));
-        p.update();
+        p.playerLogic( this.moveDirection, s);
 
         this.balls.forEach(ball => {
 
@@ -23,12 +22,19 @@ class Arcanoid {
 
             let block = this.blocks.find(b => b.collide(ball));
             if (block) {
-                block.hit(112) && this.spawnBonus(block);
+                block.hit(ball.r*44) && this.spawnBonus(block);
                 return ball.reflect(0, 1);
             }
 
             if (ball.speed && p.collide(ball)) {
-                let angle = (p.x-ball.cx+p.width/2)/p.width/2;
+                let deltaX = p.x + p.width/2 - ball.cx;
+                if (p.sticky) {
+                    ball.speed = 0;
+                    ball.anchorPoint = -deltaX;
+                    ball.cy = p.y - ball.r;
+
+                }
+                let angle = deltaX/p.width/2;
                 let nx = Math.cos(angle);
                 let ny = Math.sin(angle);
                 ball.reflect(ny, nx);
@@ -39,15 +45,7 @@ class Arcanoid {
                 return this.loss(ball);
         });
 
-        this.bonuses = this.bonuses.filter(bonus => {
-            bonus.move();
-            bonus.update();
-            let keep =
-            if (bonus.collide(p)) {
-                bonus.remove();
-                bonus.earn(p);
-            } else return true;
-        });
+        this.bonuses = this.bonuses.filter(b => b.bonusLogic(p, s));
     }
 
     spawnBonus(block) {
@@ -91,7 +89,7 @@ class Arcanoid {
     }
 
     throwBall() {
-        if(this.player) {
+        if (this.player) {
             let staticBall = this.balls.find(ball => ball.speed === 0);
             staticBall && staticBall.spawn(-Math.PI/4 - rnd(Math.PI/2));
         }

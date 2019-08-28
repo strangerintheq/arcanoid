@@ -4,7 +4,18 @@ class Ball extends Box {
                 tag = 'circle',
                 keys = ['cx', 'cy', 'r']) {
         super('red', cx - r, cy - r, r*2, r*2, tag, keys);
-        Object.assign(this, {cx, cy, r, anchorPoint:0, speed: 0});
+        Object.assign(this, {cx, cy, r, anchorPoint: 0, speed: 0});
+    }
+
+    resizeBall(r) {
+        Object.assign(this, {
+            r,
+            x: this.cx - r,
+            y: this.cy - r,
+            width: r*2,
+            height: r*2
+        });
+        this.update();
     }
 
     spawn(dir, speed = 1.3) {

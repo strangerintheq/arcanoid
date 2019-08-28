@@ -1,3 +1,4 @@
+let types = ['🍇','🍄','🍌','🍎','🍒','🍓','🥕','🍉','🍬','🍺'];
 let rnd = i => (i||1)*Math.random();
 let arcanoid = new Arcanoid();
 
