@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arcanoid SVG</title>
+    <style>
+        svg, body {
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            margin: 0;
+            user-select: none;
+        }
+
+        text {
+            text-anchor: middle;
+            dominant-baseline: middle;
+            font-family: Arial, sans-serif;
+            pointer-events: none;
+            font-size: 10px;
+        }
+    </style>
+    <script src="scripts/Body.js"></script>
+    <script src="scripts/Box.js"></script>
+    <script src="scripts/Ball.js"></script>
+    <script src="scripts/Block.js"></script>
+    <script src="scripts/Bonus.js"></script>
+    <script src="scripts/Player.js"></script>
+    <script src="scripts/Arcanoid.js"></script>
+</head>
+<body>
+
+    <svg viewbox=-100,-100,200,200 id=svg>
+        <rect x=-100 y=-100 width=200 height=200 fill=black></rect>
+        <g id=blocksGroup></g>
+        <g id=ballsGroup></g>
+        <g id=menuGroup>
+            <rect x=-50 y=-15 width=100 height=30 fill=steelblue onclick="start()"></rect>
+            <text y=2>START</text>
+        </g>
+        <text id=score y=-93.5 fill=white>0</text>
+    </svg>
+
+    <script src="scripts/Game.js"></script>
+</body>
+</html>
